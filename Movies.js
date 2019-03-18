@@ -13,15 +13,15 @@ var MovieSchema = new Schema({
     year: { type: String, required: true},
     genre: { type: String, required: true}, // Should limit to specific genres?
     actors: [ //Array of 3 actors that were in the film
-        { ActorName: { type: String, required: true}, ActorCharacter: { type: String, required: true}
-        { ActorName: { type: String, required: true}, ActorCharacter: { type: String, required: true}
-        { ActorName: { type: String, required: true}, ActorCharacter: { type: String, required: true}
+        { ActorName: { type: String, required: true}, ActorCharacter: { type: String, required: true} },
+        { ActorName: { type: String, required: true}, ActorCharacter: { type: String, required: true} },
+        { ActorName: { type: String, required: true}, ActorCharacter: { type: String, required: true} }
     ]
 });
 
-UserSchema.pre('save', function(next) {
+MovieSchema.pre('save', function(next) {
         next(); // Not sure exactly what this is, but it seems to be all that is needed from the Users.js template
 });
 
 // return the model
-module.exports = mongoose.model('Movie', UserSchema);
+module.exports = mongoose.model('Movie', MovieSchema);
