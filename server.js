@@ -137,6 +137,71 @@ router.route('/movies')
                 });
             }
         }
+    )
+    .get(authJwtController.isAuthenticated, function(req, res)
+    {
+        if(!req.body)
+        {
+            return res.status(403).json({success: false, message: "Empty query"});
+        }
+        else
+        {
+            Movie.find(req.body).select("title year genre actor").exec(function (err, movie)
+            {
+                if (err) res.send(err);
+                if(movie && movie.length > 0)
+                {
+                    return res.status(200).json({success: true, message: "Success: movie found", movie: movie});
+                }
+                else
+                {
+                    return res.status(400).json({success: true, message: "Error: no movie found", movie: movie});
+                }
+            })
+        }
+    })
+    .put(authJwtController.isAuthenticated, function (req, res)
+    {
+        if(!req.body || !req.body.findMovie || !req.body.updateMovieTo)
+        {
+            return res.status(403).json({success: false, message: "Error: no entity provided to update"});
+        }
+        else
+        {
+            Movie.updateMany(req.body.findMovie, req.body.updateMovieTo, function(err, doc)
+            {
+                if(err)
+                {
+                    return res.status(403).json({success: false, message: "Update failed"});
+                }
+                else if(doc.n === 0)
+                {
+                    return res.status(404).json({success: false, message: "Movie not found"});
+                }
+                else
+                {
+                    return res.status(200).json({success: true, message: "Movie updated"});
+                }
+            })
+        }
+    })
+    .delete(authJwtController.isAuthenticated, function(req, res)
+    {
+
+    })
+    .all(function (req, res)
+    {
+        console.log(req.body);
+        res.status(405).send({success: false, message: 'Invalid method.'});
+    }
+    );
+
+router.route('/')
+    .all(function (req, res)
+        {
+            console.log(req.body);
+            res.status(403).send({success: false, message: 'Root directory: Unauthorized'});
+        }
     );
 
 app.use('/', router);
