@@ -104,10 +104,7 @@ router.route('/movies')
             if (!req.body.title ||
                 !req.body.year ||
                 !req.body.genre ||
-                !req.body.actors ||
-                !req.body.actors[0] ||
-                !req.body.actors[1] ||
-                !req.body.actors[2])
+                !req.body.actors ||)
                 {
                     res.status(400).json({success: false, message: 'Incorrect movie format'});
                 }
