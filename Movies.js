@@ -6,10 +6,17 @@ mongoose.Promise = global.Promise;
 
 mongoose.connect(process.env.DB, { useNewUrlParser: true } );
 mongoose.set('useCreateIndex', true);
-// NOTE: BELOW IS INCOMPLETE AND COPIED FROM User.js !!
+
 // user schema
 var MovieSchema = new Schema({
-
+    title: { type: String, required: true, index: { unique: true }},
+    year: { type: String, required: true},
+    genre: { type: String, required: true}, // Should limit to specific genres?
+    actors: [ //Array of 3 actors that were in the film
+        { ActorName: { type: String, required: true}, ActorCharacter: { type: String, required: true}
+        { ActorName: { type: String, required: true}, ActorCharacter: { type: String, required: true}
+        { ActorName: { type: String, required: true}, ActorCharacter: { type: String, required: true}
+    ]
 });
 
 UserSchema.pre('save', function(next) {

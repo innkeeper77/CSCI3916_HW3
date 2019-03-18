@@ -96,5 +96,48 @@ router.post('/signin', function(req, res) {
     });
 });
 
+router.route('/movies')
+    .post(authJwtController.isAuthenticated, function (req, res) // Post: create a new movie entry
+        {
+            console.log(req.body);
+            // if format = wrong, else post.
+            if (!req.body.title ||
+                !req.body.year ||
+                !req.body.genre ||
+                !req.body.actors ||
+                !req.body.actors[0] ||
+                !req.body.actors[1] ||
+                !req.body.actors[2])
+                {
+                    res.status(400).json({success: false, message: 'Incorrect movie format'});
+                }
+            else
+            {
+                var movie = new Movie();
+                movie.title = req.body.title;
+                movie.year = req.body.year;
+                movie.genre = req.body.genre;
+                movie.actor = req.body.actor;
+                movie.actors = req.body.actors;
+
+                movie.save(function (err)
+                {
+                    if (err)
+                    {
+                        if (err.code === 11000)
+                        {
+                            return res.status(403).json({success: false, message: "Error: movie title already exists."});
+                        }
+                        else
+                        {
+                            return res.status(403).send(err);
+                        }
+                    }
+                    res.status(201).send({success: true, message: "Success: movie added"});
+                });
+            }
+        }
+    );
+
 app.use('/', router);
 app.listen(process.env.PORT || 8080);
