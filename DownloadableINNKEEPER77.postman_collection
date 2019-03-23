@@ -1,47 +1,121 @@
-
-Skip to content
-
-    Pull requests
-    Issues
-    Marketplace
-    Explore
-
-    @innkeeper77
-
-0
-0
-
-    0
-
-innkeeper77/CSCI3916_HW2
-Code
-Issues 0
-Pull requests 0
-Projects 0
-Wiki
-Insights
-Settings
-CSCI3916_HW2/DownloadableINNKEEPER77.postman_collection
-@innkeeper77 innkeeper77 Create DownloadableINNKEEPER77.postman_collection 822b3cf 15 days ago
-We found a potential security vulnerability in one of your dependencies.
-
-Only the owner of this repository can see this message.
-Manage your notification settings or learn more about vulnerability alerts.
-350 lines (350 sloc) 6.57 KB
 {
 	"info": {
-		"_postman_id": "d2a784bb-cec3-444e-90e7-018c8d882fca",
-		"name": "CSCI3916_HW2_INNKEEPER77",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+		"_postman_id": "34f0aaa8-7705-4acd-84e8-bb2530216567",
+		"name": "CSCI-3916-HW3-inkeeper77",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Signup",
+			"name": "signup",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "name",
+							"value": "innkeeper",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "innkeeper77",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "itsaterriblepassword",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://csci3916-hw3-innkeeper77.herokuapp.com/signup",
+					"protocol": "https",
+					"host": [
+						"csci3916-hw3-innkeeper77",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"signup"
+					]
+				},
+				"description": "Test user signup"
+			},
+			"response": []
+		},
+		{
+			"name": "signin",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "b5d84d49-2d37-4bb5-bb0e-a081a4bf4f61",
+						"id": "bd2ca5ab-2f1d-483d-98b1-3cf6ed1cbaaf",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"pm.environment.set(\"signin_token\", jsonData.token);",
+							"tests['Signin succeeded'] = jsonData.success === true;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "innkeeper77",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "itsaterriblepassword",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://csci3916-hw3-innkeeper77.herokuapp.com/signin",
+					"protocol": "https",
+					"host": [
+						"csci3916-hw3-innkeeper77",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"signin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "movies (Create)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bd2ca5ab-2f1d-483d-98b1-3cf6ed1cbaaf",
 						"exec": [
 							""
 						],
@@ -55,71 +129,43 @@ Manage your notification settings or learn more about vulnerability alerts.
 					{
 						"key": "Content-Type",
 						"name": "Content-Type",
-						"value": "application/x-www-form-urlencoded",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{signin_token}}",
 						"type": "text"
 					}
 				],
 				"body": {
-					"mode": "urlencoded",
-					"urlencoded": [
-						{
-							"key": "username",
-							"value": "innkeeper77",
-							"type": "text"
-						},
-						{
-							"key": "password",
-							"value": "cu",
-							"type": "text"
-						}
-					]
+					"mode": "raw",
+					"raw": "{\n\t\"title\": \"primer\",\n\t\"year\": \"2004\",\n\t\"genre\": \"Mystery\",\n\t\"actors\": [ { \"ActorName\": \"Shane Carruth\", \"ActorCharacter\": \"Aaron\" },\n\t\t\t  { \"ActorName\": \"David Sullivan\", \"ActorCharacter\": \"Abe\" },\n\t\t\t  { \"ActorName\": \"Casey Gooden\", \"ActorCharacter\": \"Robert\" }\n\t\t\t  ]\n}"
 				},
-				"url": "https://csci3916hw2enelson.herokuapp.com/signup",
-				"description": "Signup"
+				"url": {
+					"raw": "https://csci3916-hw3-innkeeper77.herokuapp.com/movies",
+					"protocol": "https",
+					"host": [
+						"csci3916-hw3-innkeeper77",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"movies"
+					]
+				}
 			},
 			"response": []
 		},
 		{
-			"name": "Signup fail - wrong request type",
-			"request": {
-				"method": "PUT",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
-						"value": "application/x-www-form-urlencoded"
-					}
-				],
-				"body": {
-					"mode": "urlencoded",
-					"urlencoded": [
-						{
-							"key": "username",
-							"value": "innkeeper77",
-							"type": "text"
-						},
-						{
-							"key": "password",
-							"value": "cu",
-							"type": "text"
-						}
-					]
-				},
-				"url": "https://csci3916hw2enelson.herokuapp.com/signup"
-			},
-			"response": []
-		},
-		{
-			"name": "Signin",
+			"name": "movies (Create ERROR)",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "e5fb25fb-d45e-4f68-8d02-087173c12501",
+						"id": "bd2ca5ab-2f1d-483d-98b1-3cf6ed1cbaaf",
 						"exec": [
-							"var jsonData = JSON.parse(responseBody);",
-							"pm.environment.set(\"session_token\", jsonData.token);"
+							""
 						],
 						"type": "text/javascript"
 					}
@@ -131,64 +177,50 @@ Manage your notification settings or learn more about vulnerability alerts.
 					{
 						"key": "Content-Type",
 						"name": "Content-Type",
-						"value": "application/x-www-form-urlencoded",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "urlencoded",
-					"urlencoded": [
-						{
-							"key": "username",
-							"value": "innkeeper77",
-							"type": "text"
-						},
-						{
-							"key": "password",
-							"value": "cu",
-							"type": "text"
-						}
-					]
-				},
-				"url": "https://csci3916hw2enelson.herokuapp.com/signin"
-			},
-			"response": []
-		},
-		{
-			"name": "Signin Fail - user not found",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
 						"type": "text",
-						"value": "application/x-www-form-urlencoded"
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{signin_token}}"
 					}
 				],
 				"body": {
-					"mode": "urlencoded",
-					"urlencoded": [
-						{
-							"key": "username",
-							"value": "innkeeper79",
-							"type": "text"
-						},
-						{
-							"key": "password",
-							"value": "cu",
-							"type": "text"
-						}
-					]
+					"mode": "raw",
+					"raw": "{\n\t\"title\": \"Primer\",\n\t\"year\": \"2004\",\n\t\"genre\": \"Mystery\",\n\t\"actors\": { \"ActorName\": \"Shane Carruth\", \"ActorCharacter\": \"Aaron\" },\n\t\t\t  { \"ActorName\": \"David Sullivan\", \"ActorCharacter\": \"Abe\" },\n\t\t\t  { \"ActorName\": \"Casey Gooden\", \"ActorCharacter\": \"Robert\" }\n}"
 				},
-				"url": "https://csci3916hw2enelson.herokuapp.com/signin"
+				"url": {
+					"raw": "https://csci3916-hw3-innkeeper77.herokuapp.com/movies",
+					"protocol": "https",
+					"host": [
+						"csci3916-hw3-innkeeper77",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"movies"
+					]
+				}
 			},
 			"response": []
 		},
 		{
-			"name": "Post: Save movie",
+			"name": "movies (Update)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bd2ca5ab-2f1d-483d-98b1-3cf6ed1cbaaf",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
-				"method": "POST",
+				"method": "PUT",
 				"header": [
 					{
 						"key": "Content-Type",
@@ -198,20 +230,46 @@ Manage your notification settings or learn more about vulnerability alerts.
 					},
 					{
 						"key": "Authorization",
-						"value": "session_token",
-						"type": "text"
+						"type": "text",
+						"value": "{{signin_token}}"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": ""
+					"raw": "{\n\t\"findMovie\": { \"title\": \"primer\" },\n\t\"updateMovieTo\": { \"title\": \"Primer\" }\n}"
 				},
-				"url": "https://csci3916hw2enelson.herokuapp.com/movies"
+				"url": {
+					"raw": "https://csci3916-hw3-innkeeper77.herokuapp.com/movies",
+					"protocol": "https",
+					"host": [
+						"csci3916-hw3-innkeeper77",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"movies"
+					]
+				}
 			},
 			"response": []
 		},
 		{
-			"name": "Get: Show movies",
+			"name": "movies (Get)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bd2ca5ab-2f1d-483d-98b1-3cf6ed1cbaaf",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
 				"method": "GET",
 				"header": [
@@ -223,79 +281,44 @@ Manage your notification settings or learn more about vulnerability alerts.
 					},
 					{
 						"key": "Authorization",
-						"value": "session_token",
-						"type": "text"
+						"type": "text",
+						"value": "{{signin_token}}"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": ""
+					"raw": "{\n\t\"title\": \"Primer\"\n}"
 				},
-				"url": "https://csci3916hw2enelson.herokuapp.com/movies"
+				"url": {
+					"raw": "https://csci3916-hw3-innkeeper77.herokuapp.com/movies",
+					"protocol": "https",
+					"host": [
+						"csci3916-hw3-innkeeper77",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"movies"
+					]
+				}
 			},
 			"response": []
 		},
 		{
-			"name": "Put: Update movie",
-			"request": {
-				"method": "PUT",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
-					},
-					{
-						"key": "Authorization",
-						"type": "text",
-						"value": "{{session_token}}"
+			"name": "movies (Delete \"Primer\")",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bd2ca5ab-2f1d-483d-98b1-3cf6ed1cbaaf",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
 					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": "https://csci3916hw2enelson.herokuapp.com/movies"
-			},
-			"response": []
-		},
-		{
-			"name": "Put: Update movie FAIL: BadAuth",
+				}
+			],
 			"request": {
-				"method": "PUT",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
-					},
-					{
-						"description": "Junk value",
-						"key": "Authorization",
-						"type": "text",
-						"value": "16ewskflhj"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": "https://csci3916hw2enelson.herokuapp.com/movies"
-			},
-			"response": []
-		},
-		{
-			"name": "Delete Movie",
-			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": {
-						"username": "testuser",
-						"password": "cu"
-					}
-				},
 				"method": "DELETE",
 				"header": [
 					{
@@ -305,91 +328,29 @@ Manage your notification settings or learn more about vulnerability alerts.
 						"value": "application/json"
 					},
 					{
-						"description": "// This needs basic auth instead",
 						"key": "Authorization",
 						"type": "text",
-						"value": "{{session_token}}",
-						"disabled": true
+						"value": "{{signin_token}}"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": ""
+					"raw": "{\n\t\"title\": \"Primer\"\n}"
 				},
-				"url": "https://csci3916hw2enelson.herokuapp.com/movies"
+				"url": {
+					"raw": "https://csci3916-hw3-innkeeper77.herokuapp.com/movies",
+					"protocol": "https",
+					"host": [
+						"csci3916-hw3-innkeeper77",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"movies"
+					]
+				}
 			},
 			"response": []
-		},
-		{
-			"name": "Delete Movie FAIL BADAUTH",
-			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": {
-						"username": "innkeeper77",
-						"password": "cu"
-					}
-				},
-				"method": "DELETE",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
-					},
-					{
-						"description": "// This needs basic auth instead",
-						"key": "Authorization",
-						"type": "text",
-						"value": "{{session_token}}",
-						"disabled": true
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": "https://csci3916hw2enelson.herokuapp.com/movies"
-			},
-			"response": []
-		}
-	],
-	"event": [
-		{
-			"listen": "prerequest",
-			"script": {
-				"id": "402ef0cc-083a-4d62-807e-05671b3d5a2e",
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
-		},
-		{
-			"listen": "test",
-			"script": {
-				"id": "a4ab8eba-2e39-4a5e-ae70-b79ed4cb4358",
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
 		}
 	]
 }
-
-    © 2019 GitHub, Inc.
-    Terms
-    Privacy
-    Security
-    Status
-    Help
-
-    Contact GitHub
-    Pricing
-    API
-    Training
-    Blog
-    About
-

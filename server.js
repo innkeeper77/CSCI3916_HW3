@@ -158,7 +158,7 @@ router.route('/movies')
                 }
                 else
                 {
-                    return res.status(400).json({success: true, message: "Error: no movie found", movie: movie});
+                    return res.status(404).json({success: false, message: "Error: no movie found", movie: movie});
                 }
             })
         }
@@ -190,7 +190,28 @@ router.route('/movies')
     })
     .delete(authJwtController.isAuthenticated, function(req, res)
     {
-
+        if(!req.body)
+        {
+            return res.status(403).json({success: false, message: "Error: no entity provided to delete"});
+        }
+        else
+        {
+            Movie.deleteOne(req.body.findMovie, function(err, doc)
+            {
+                if(err)
+                {
+                    return res.status(403).json({success: false, message: "Delete failed"});
+                }
+                else if(doc.n === 0)
+                {
+                    return res.status(404).json({success: false, message: "Movie not found"});
+                }
+                else
+                {
+                    return res.status(200).json({success: true, message: "Movie deleted"});
+                }
+            })
+        }
     })
     .all(function (req, res)
     {
