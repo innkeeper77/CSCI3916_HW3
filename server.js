@@ -105,12 +105,12 @@ router.route('/movies')
                 !req.body.year ||
                 !req.body.genre ||
                 !req.body.actors ||
-                !req.body.actors[0].actorname ||
-                !req.body.actors[1].actorname ||
-                !req.body.actors[2].actorname ||
-                !req.body.actors[0].charactername ||
-                !req.body.actors[1].charactername ||
-                !req.body.actors[2].charactername)
+                !req.body.actors[0].ActorName ||
+                !req.body.actors[1].ActorName ||
+                !req.body.actors[2].ActorName ||
+                !req.body.actors[0].ActorCharacter ||
+                !req.body.actors[1].ActorCharacter ||
+                !req.body.actors[2].ActorCharacter)
                 {
                     res.status(400).json({success: false, message: 'Incorrect movie format'});
                 }
